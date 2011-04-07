@@ -32,7 +32,7 @@ MEDIA_ROOT = '/media'
 
 MEDIA_URL = '/media'
 
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/adminmedia/'
 
 SECRET_KEY = 'zblqmlz4i=*ydr23_4@r3_k!@%4idkhw+2=z7x9l7x-8hd(dtt'
 
@@ -62,4 +62,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'row',
 )

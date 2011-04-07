@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load humanizetime %}
+
+
+
+{% block content %}
+
+<div id="distance-display"></div>
+
+<div class="twitter-feed">
+  {% for status in twitter_statuses %}
+  <div class="twitter-status">
+    <img src="{{ status.profile_image_url }}" class="twitter-image" alt="Profile Image">
+    <span class="twitter-message"><span class="twitter-author">{{ status.from_user }}</span>
+      {{ status.text|safe }}
+    </span><br>
+    <span class="twitter-time">about {{ status.created_at|humanize_ago }} ago</span>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock %}
