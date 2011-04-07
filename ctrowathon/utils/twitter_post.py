@@ -15,8 +15,8 @@ twitter = Twitter(domain='api.twitter.com',
 __all__ = ('send_update',
            'get_updates',)
 
-#HASH_TAG = '#crunchtimerowathon'
-HASH_TAG = '#extremecouponing'
+HASH_TAG = '#crunchtimerowathon'
+#HASH_TAG = '#extremecouponing'
 
 def send_update(message):
     random_tweet = message + " %s" % HASH_TAG

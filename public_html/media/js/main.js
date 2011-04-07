@@ -1,3 +1,12 @@
+function max(x, y) {
+  return (x > y) ? x : y;
+}
+
+function min(x, y) {
+  return (x < y) ? x : y;
+}
+
+
 (function ($, window) {
   var unitMaps = [
     ["meters", 1],
@@ -20,6 +29,7 @@
     },
 
     "createUnitDom": function (distance) {
+      window.currentDistance = distance;
       var parentDom = $("<div class='distance-wrapper'/>").css({opacity: 0});
       for (var i = 0; i < unitMaps.length; ++i) {
         var currentDistance = this.addCommas(Math.round(distance * unitMaps[i][1]));
@@ -33,20 +43,65 @@
       });
       display.append(parentDom);
       parentDom.fadeTo(200, 1);
+    },
+
+    "initializeMap": function ($map) {
+      window.mapInitialized = true;
+      var self = this;
+      var latlng = new google.maps.LatLng(42.37110, -71.04376);
+      var m = -3.1007751937984497e-05;
+      var b = 10.651162790697676;
+      console.log( Math.round(min(max(m * window.currentDistance + b, 6), 14)))
+      var myOptions = {
+        zoom: Math.round(min(max(m * window.currentDistance + b, 6), 14)),
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        disableDefaultUI: true
+      };
+      var map = new google.maps.Map($map[0],
+                                    myOptions);
+      this.drawCircle(map, latlng);
+      setInterval(function () {
+        self.drawCircle(map, latlng);
+      }, 500);
+    },
+
+    "drawCircle": function (map, center) {
+      var oldCircle = this.circle;
+      if (this.circle) {
+        this.circle.setRadius(window.currentDistance);
+      } else {
+        this.circle = new google.maps.Circle({
+          strokeColor: "#FF0000",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#FF0000",
+          fillOpacity: 0.35,
+          map: map,
+          clickable: false,
+          center: center,
+          radius: window.currentDistance
+        });
+      }
     }
   };
 
   $(function () {
+    window.mapInitialized = false;
+    $(".map-display").css({width: $(document).width() - $(".twitter-feed").width() - 60});
+
     setInterval(function () {
       $.ajax({
         url: "/distance/",
         timeout: 100,
         success: function (data) {
           utils.createUnitDom(data['distance']);
+          if (!window.mapInitialized) {
+            utils.initializeMap($("#map-display"));
+          }
         }
       });
     }, 200);
 
   });
-
 })(jQuery, window);

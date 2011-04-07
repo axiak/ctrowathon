@@ -11,7 +11,6 @@ DistanceThread.initialize()
 
 def main(request):
     val = DistanceThread.singleton().get_distances()
-    print val[0][0] - val[-1][0]
     ctx = {}
     ctx['twitter_statuses'] = get_updates()[:10]
     response = simple.direct_to_template(request, 'mainrow.html', ctx)

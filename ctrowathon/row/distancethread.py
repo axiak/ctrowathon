@@ -70,8 +70,8 @@ class DistanceThread(threading.Thread):
 def static_boundary(values):
     if len(values) < 2:
         return
-    if (int(values[0][1]) / 1000) > (int(values[1][1]) / 1000):
-        value = (int(values[0][1]) / 10000) * 10
+    if (int(values[0][1]) / 10000) > (int(values[1][1]) / 10000):
+        value = int(values[0][1]) / 1000
         send_alert("%s kilometers down." % value)
 
 def send_alert(alert_text):
