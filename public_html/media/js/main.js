@@ -23,7 +23,7 @@
       var parentDom = $("<div class='distance-wrapper'/>").css({opacity: 0});
       for (var i = 0; i < unitMaps.length; ++i) {
         var currentDistance = this.addCommas(Math.round(distance * unitMaps[i][1]));
-        var child = $("<span>" + currentDistance + " " + unitMaps[i][0] + "</span><br/>")
+        var child = $("<span>" + currentDistance + " " + unitMaps[i][0] + "</span>")
                      .addClass("distance-info").addClass(unitMaps[i][0].replace(" ", "-"));
         parentDom.append(child);
       }

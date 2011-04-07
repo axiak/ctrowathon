@@ -3,8 +3,18 @@ import collections
 import datetime
 import subprocess
 import os
+import random
+import functools
+
+from utils.twitter_post import *
 
 __all__ = ('DistanceThread',)
+
+alerts = []
+
+def distance_alert(method):
+    alerts.append(method)
+    return method
 
 class DistanceThread(threading.Thread):
     distance = 0
@@ -51,3 +61,21 @@ class DistanceThread(threading.Thread):
                     continue
                 with self._lock:
                     self._queue.appendleft((datetime.datetime.now(), value))
+                    vals = tuple(self._queue)
+                for alert in alerts:
+                    alert(vals)
+
+
+@distance_alert
+def static_boundary(values):
+    if len(values) < 2:
+        return
+    if (int(values[0][1]) / 1000) > (int(values[1][1]) / 1000):
+        value = (int(values[0][1]) / 10000) * 10
+        send_alert("%s kilometers down." % value)
+
+def send_alert(alert_text):
+    text_helpers = ('Way to go!',
+                    'Keep going!',
+                    )
+    send_update("%s %s" % (alert_text, random.choice(text_helpers)))
