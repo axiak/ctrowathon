@@ -94,10 +94,10 @@ function min(x, y) {
       clock.text("" + minutes + ":" + seconds);
       var roundUp = Math.ceil(time / 1800) * 1800;
       var difference = roundUp - time;
-      if (difference > 600) {
+      if (difference > 450) {
         clock.css({color: "#000"});
       } else {
-        clock.css({color: "rgb(0," + Math.round((600 - difference) / 600 * 255) + " , 0)"});
+        clock.css({color: "rgb(0," + Math.round((450 - difference) / 450 * 255) + " , 0)"});
       }
     }
   };
