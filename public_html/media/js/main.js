@@ -20,7 +20,7 @@ function min(x, y) {
   if (window.location.host === 'localhost') {
     timeoutScale = 1;
   } else if (window.location.host === 'rowathon.crunchtime.com' || window.location.host === 'rowathon.axiak.net') {
-    timeoutScale = 10;
+    timeoutScale = 5;
   }
 
   var utils = {
@@ -114,18 +114,27 @@ function min(x, y) {
     window.mapInitialized = false;
     $(".map-display").css({width: $(document).width() - $(".twitter-feed").width() - 60});
 
+    var distanceWaiting = false;
+
     setInterval(function () {
-      $.ajax({
-        url: "/distance/",
-        timeout: 100,
-        success: function (data) {
-          utils.createUnitDom(data['distance']);
-          utils.updateClock(data['time']);
-          if (!window.mapInitialized) {
-            utils.initializeMap($("#map-display"));
+      if (!distanceWaiting) {
+        $.ajax({
+          url: "/distance/",
+          timeout: 100,
+          success: function (data) {
+            distanceWaiting = false;
+            utils.createUnitDom(data['distance']);
+            utils.updateClock(data['time']);
+            if (!window.mapInitialized) {
+              utils.initializeMap($("#map-display"));
+            }
+          },
+          failure: function () {
+            distanceWaiting = false;
           }
-        }
-      });
+        });
+        distanceWaiting = true;
+      }
     }, 200 * timeoutScale);
 
   });
