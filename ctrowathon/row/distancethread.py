@@ -60,11 +60,13 @@ class DistanceThread(threading.Thread):
                 value = p.stdout.readline().strip()
                 try:
                     value = value.split()
-                    value = float(value[0]), float(value[1])
+                    distance, t = float(value[0]), float(value[1])
+                    if distance < 85000:
+                        distance += 100000
                 except:
                     continue
                 with self._lock:
-                    self._queue.appendleft((datetime.datetime.now(), value[0], value[1]))
+                    self._queue.appendleft((datetime.datetime.now(), distance, t))
                     vals = tuple(self._queue)
                 for alert in alerts:
                     alert(vals)
