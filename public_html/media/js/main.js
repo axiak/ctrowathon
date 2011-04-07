@@ -12,7 +12,7 @@ function min(x, y) {
     ["meters", 1],
     ["miles", 0.0006213711],
     ["football fields", 0.00364537766],
-    ["boneless skinless chicken breasts", 4.92125]
+    ["boneless skinless chicken breasts", 6.92125]
   ];
 
   var utils = {
@@ -83,6 +83,23 @@ function min(x, y) {
           radius: window.currentDistance
         });
       }
+    },
+
+    "updateClock": function (time) {
+      var minutes = Math.floor(time / 60);
+      var seconds = Math.round(time % 60);
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      var clock = $("#clock");
+      clock.text("" + minutes + ":" + seconds);
+      var roundUp = Math.ceil(time / 1800) * 1800;
+      var difference = roundUp - time;
+      if (difference > 600) {
+        clock.css({color: "#000"});
+      } else {
+        clock.css({color: "rgb(0," + Math.round((600 - difference) / 600 * 255) + " , 0)"});
+      }
     }
   };
 
@@ -96,6 +113,7 @@ function min(x, y) {
         timeout: 100,
         success: function (data) {
           utils.createUnitDom(data['distance']);
+          utils.updateClock(data['time']);
           if (!window.mapInitialized) {
             utils.initializeMap($("#map-display"));
           }

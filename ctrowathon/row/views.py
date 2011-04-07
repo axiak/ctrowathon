@@ -19,5 +19,6 @@ def main(request):
 
 
 def get_distance(request):
-    return HttpResponse(simplejson.dumps({'distance': DistanceThread.singleton().get_distance()[1]}),
+    data = DistanceThread.singleton().get_distance()
+    return HttpResponse(simplejson.dumps({'distance': data[1], 'time': data[2]}),
                             mimetype="application/json")

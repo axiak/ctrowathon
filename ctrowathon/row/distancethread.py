@@ -1,5 +1,6 @@
 import threading
 import collections
+import fcntl
 import datetime
 import subprocess
 import os
@@ -49,6 +50,8 @@ class DistanceThread(threading.Thread):
 
     def run(self):
         row_cmd = os.path.join(os.path.dirname(__file__), '..', 'cmd', 'row.py')
+        lock_file = open('/tmp/row_lock', 'w')
+        fcntl.lockf(lock_file.fileno(), fcntl.LOCK_EX)
         while True:
             p = subprocess.Popen([row_cmd], stdout=subprocess.PIPE, shell=True)
             while True:
@@ -56,11 +59,12 @@ class DistanceThread(threading.Thread):
                     break
                 value = p.stdout.readline().strip()
                 try:
-                    value = float(value)
+                    value = value.split()
+                    value = float(value[0]), float(value[1])
                 except:
                     continue
                 with self._lock:
-                    self._queue.appendleft((datetime.datetime.now(), value))
+                    self._queue.appendleft((datetime.datetime.now(), value[0], value[1]))
                     vals = tuple(self._queue)
                 for alert in alerts:
                     alert(vals)

@@ -81,3 +81,11 @@ h1 {
     font-size: 2.6em;
     margin-left: 20px;
 }
+
+#clock {
+  position: absolute;
+  font-size: 2.5em;
+  font-weight: bold;
+  left: 120px;
+  top: 75px;
+}

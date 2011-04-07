@@ -9,12 +9,19 @@ def main():
     ser.open()
     while True:
         distance = get_distance(ser)
-        time.sleep(0.10)
-        print distance
+	t = get_time(ser)
+        print distance, t
         sys.stdout.flush()
+        time.sleep(0.10)
 
 def get_distance(ser):
     ser.write("\xb0\x00")
+    ser.flush()
+    ser.read()
+    return struct.unpack("f", ser.read(4))[0]
+
+def get_time(ser):
+    ser.write("\xb3\x00")
     ser.flush()
     ser.read()
     return struct.unpack("f", ser.read(4))[0]
