@@ -15,6 +15,14 @@ function min(x, y) {
     ["boneless skinless chicken breasts", 6.92125]
   ];
 
+  var timeoutScale = 3;
+
+  if (window.location.host === 'localhost') {
+    timeoutScale = 1;
+  } else if (window.location.host === 'rowathon.crunchtime.com' || window.location.host === 'rowathon.axiak.net') {
+    timeoutScale = 10;
+  }
+
   var utils = {
     "addCommas": function (number) {
       number += '';
@@ -38,11 +46,11 @@ function min(x, y) {
         parentDom.append(child);
       }
       var display = $("#distance-display");
-      display.children().fadeTo(200, 0, undefined, function () {
+      display.children().fadeTo(200 * timeoutScale, 0, undefined, function () {
         $(this).remove();
       });
       display.append(parentDom);
-      parentDom.fadeTo(200, 1);
+      parentDom.fadeTo(200 * timeoutScale, 1);
     },
 
     "initializeMap": function ($map) {
@@ -62,7 +70,7 @@ function min(x, y) {
       this.drawCircle(map, latlng);
       setInterval(function () {
         self.drawCircle(map, latlng);
-      }, 500);
+      }, 500 * timeoutScale);
     },
 
     "drawCircle": function (map, center) {
@@ -118,7 +126,7 @@ function min(x, y) {
           }
         }
       });
-    }, 200);
+    }, 200 * timeoutScale);
 
   });
 })(jQuery, window);
