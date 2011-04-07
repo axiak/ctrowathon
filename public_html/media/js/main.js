@@ -51,7 +51,6 @@ function min(x, y) {
       var latlng = new google.maps.LatLng(42.37110, -71.04376);
       var m = -3.1007751937984497e-05;
       var b = 10.651162790697676;
-      console.log( Math.round(min(max(m * window.currentDistance + b, 6), 14)))
       var myOptions = {
         zoom: Math.round(min(max(m * window.currentDistance + b, 6), 14)),
         center: latlng,
