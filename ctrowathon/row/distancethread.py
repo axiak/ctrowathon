@@ -61,8 +61,8 @@ class DistanceThread(threading.Thread):
                 try:
                     value = value.split()
                     distance, t = float(value[0]), float(value[1])
-                    if distance < 85000:
-                        distance += 100000
+                    #if distance < 85000:
+                    #    distance += 100000
                 except:
                     continue
                 with self._lock:
