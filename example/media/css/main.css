@@ -1,0 +1,91 @@
+.distance-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 400px;
+}
+
+.twitter-image {
+    width: 40px;
+    height: 40px;
+    float: left;
+    padding: 2px;
+}
+
+body {
+    font-family: 'PT Sans', arial;
+}
+
+h1 {
+    font-family: 'Bangers', arial, serif; 
+    font-weight: normal;
+}
+
+.twitter-status {
+    clear: both;
+    font-size: 0.7em;
+    height: 45px;
+    width: 375px;
+    margin: 5px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.twitter-author {
+    font-weight: bold;
+    color: #27b;
+}
+
+.twitter-time {
+    color: #999;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.distance-info {
+    margin-right: 12px;
+}
+
+.meters {
+    font-size: 3em;
+    font-weight: bolder;
+    display: block;
+    margin: auto;
+}
+
+.distance-wrapper {
+    text-align: center;
+}
+
+.twitter-feed {
+    float: left;
+}
+
+.map-display {
+    float: right;
+    width: 300px;
+    height: 600px;
+    border: 1px solid black;
+    margin-right: 20px;
+}
+
+.clear-both {
+    clear: both;
+}
+
+#top-span {
+    height: 40px;
+    display: block;
+}
+
+#logo {
+    font-size: 2.6em;
+    margin-left: 20px;
+}
+
+#clock {
+  position: absolute;
+  font-size: 2.5em;
+  font-weight: bold;
+  left: 120px;
+  top: 75px;
+}
