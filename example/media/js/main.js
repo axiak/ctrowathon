@@ -96,12 +96,12 @@ function min(x, y) {
       }
       var clock = $("#clock");
       clock.text("" + minutes + ":" + seconds);
-      var roundUp = Math.ceil(time / 1800) * 1800;
+      var roundUp = Math.ceil(time / 60) * 60;
       var difference = roundUp - time;
-      if (difference > 450) {
+      if (difference > 30) {
         clock.css({color: "#000"});
       } else {
-        clock.css({color: "rgb(0," + Math.round((450 - difference) / 450 * 255) + " , 0)"});
+        clock.css({color: "rgb(0," + Math.round((30 - difference) / 30 * 255) + " , 0)"});
       }
     }
   };
@@ -113,7 +113,7 @@ function min(x, y) {
     var distanceWaiting = false;
 
     var distance = 1500;
-    var time = 433;
+    var time = 451;
 
     setInterval(function () {
       time += 200 * timeoutScale / 1000;
